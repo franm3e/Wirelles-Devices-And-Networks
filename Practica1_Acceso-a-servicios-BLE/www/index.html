@@ -1,0 +1,140 @@
+
+<!-- Francisco Martínez Esteso -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	
+	<meta charset="utf-8" />
+	
+	<!-- BOOTSTRAP -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+	
+
+	<script src="js/index.js"></script>
+	<script src="js/jquery.js"></script>
+	<script src="cordova.js"></script>
+	<script src="js/jquery.mobile-1.4.5.min.js"></script>
+
+	<script>
+	  app.initialize();
+	</script>
+
+	<title>Bean - App</title>
+
+	<style>
+		input[type="range"] {
+		    /*background-color: silver;*/
+		    width: 100%;
+		    height:10px;
+		    margin-top: 5px;
+		    margin-bottom: 5px;
+		}
+
+
+		#redLed-p{
+		    background-color: red;
+		}
+
+		#greenLed-p{
+		    background-color: green;
+		}
+
+		#blueLed-p{
+		    background-color: blue;
+		}
+
+		.temperatureLabel {
+			font-size: xx-large;
+			text-align: center;
+		}
+
+		p.topic {
+		        font-size: medium;
+			font-weight: bold;
+		}
+
+		.name {
+			font-family: Arial,Helvetica,sans-serif;
+			font-weight: bold;
+			font-size: medium;
+			line-height: 5px;
+		}
+		.data{
+			font-family: Arial,Helvetica,sans-serif;
+			font-size: small;
+			line-height: 5px;
+		}
+
+		div.scanning{
+			width : 300px;
+			padding : 10px;
+			border :  solid 2px black;
+			margin : 25px;
+			background-color: lightgray;
+		}
+		div.connected{
+			width : 300px;
+			padding : 10px;
+			border :  solid 2px black;
+			margin : 25px;
+			background-color: lightgray;
+		}
+	
+	</style>
+</head>
+
+<body>
+	<div data-role="page" id="scanning" data-theme="a">
+		<div class="alert alert-warning alert-dismissible fade show" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<strong>¡¡AVISO!!</strong> Debes tener activado el servicio Bluetooth y tener conexión a Internet
+				para el correcto funcionamiento de la app.
+				</div>
+		<div data-role="header">
+			<h1 class="h1" style="margin:5% 5% 5% 5%;">LightBlueBean - App</h1>
+		</div>
+		<div data-role="content">
+			<h2 class="h2" style="margin: 5%;">Discovered Devices</h2>
+			<ul data-role="listview" id="deviceList" class="list-group"></ul>
+		</div>
+	</div>
+	
+	<!-- 
+	<div id="found_devices" class="btn-group  btn-group-vertical"></div>
+	- -->
+	<div data-role="page" id="connected" data-theme="a">
+		<div data-role="header" data-add-back-btn="true">
+			<h2 class="h2">LightBlueBean - App</h2>
+			<h3 class="h3"> <span id="deviceName"></span><input id="disconnect_button" type=image src="./img/off.png" width="32" heigh="32" style="vertical-align:middle"></h3>
+			<h3 class="h3" id="deviceAddress"></h3>
+			<h4 class="h4">State: <span id="deviceState"></span>&#09;Battery Level:<span id="Battery"></span>%</h4>
+		</div>
+			
+		<div id="temperatureDisplay">
+			<hr>
+			<p class="topic">Temperature:
+			  <span class="temperatureLabel"
+				id="temperature">N/A</span>
+			  C&deg;
+			</p>
+		</div>
+
+		<div id="ledControl" class="ledcontrol">
+			<hr>
+			<p class="topic">LED control</p>
+			<p id="redLed-p"><input type="range" id="redLed" min="0" max="255" step="1" value="0" onchange="app.LedUpdate()"></p>
+			<p id="greenLed-p"><input type="range" id="greenLed" min="0" max="255" step="1" value="0" onchange="app.LedUpdate()"></p>
+			<p id="blueLed-p"><input type="range" id="blueLed" min="0" max="255" step="1" value="0" onchange="app.LedUpdate()"></p>
+		</div>
+	</div>
+	
+</body>
+
+</html>

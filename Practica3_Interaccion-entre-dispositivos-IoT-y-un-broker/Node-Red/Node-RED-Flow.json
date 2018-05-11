@@ -1,0 +1,453 @@
+[
+    {
+        "id": "f70aa3f2.fe7ef",
+        "type": "debug",
+        "z": "b6ec8540.7f0b18",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 590,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "712cc08f.e6d34",
+        "type": "ui_switch",
+        "z": "b6ec8540.7f0b18",
+        "name": "",
+        "label": "Modo (AUTO):",
+        "group": "9380d42c.3c5f1",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 140,
+        "y": 140,
+        "wires": [
+            [
+                "3adc3855.b6c7",
+                "5db7f7c.a7b2288",
+                "d178eaf.61eb998"
+            ]
+        ]
+    },
+    {
+        "id": "bbaed2eb.1f7a8",
+        "type": "debug",
+        "z": "b6ec8540.7f0b18",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 630,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "9400cba2.39dfb",
+        "type": "ui_switch",
+        "z": "b6ec8540.7f0b18",
+        "name": "",
+        "label": "Estado LED (ON/OFF):",
+        "group": "9380d42c.3c5f1",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 170,
+        "y": 280,
+        "wires": [
+            [
+                "b40d36cf.e7f3c8",
+                "fb997bbc.0e2918"
+            ]
+        ]
+    },
+    {
+        "id": "3adc3855.b6c7",
+        "type": "mqtt out",
+        "z": "b6ec8540.7f0b18",
+        "name": "",
+        "topic": "/modo/estado",
+        "qos": "2",
+        "retain": "",
+        "broker": "7e4248d7.529a5",
+        "x": 590,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "b40d36cf.e7f3c8",
+        "type": "mqtt out",
+        "z": "b6ec8540.7f0b18",
+        "name": "",
+        "topic": "/modo/manual/estado",
+        "qos": "",
+        "retain": "",
+        "broker": "7e4248d7.529a5",
+        "x": 600,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "d3ab3347.a55518",
+        "type": "mqtt out",
+        "z": "b6ec8540.7f0b18",
+        "name": "",
+        "topic": "/led/color",
+        "qos": "1",
+        "retain": "",
+        "broker": "7e4248d7.529a5",
+        "x": 580,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "12de67e7.766a68",
+        "type": "function",
+        "z": "b6ec8540.7f0b18",
+        "name": "Function",
+        "func": "color = msg.payload\nmsg.payload = \"El color seleccionado es:    \" + color\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 320,
+        "y": 440,
+        "wires": [
+            [
+                "f70aa3f2.fe7ef"
+            ]
+        ]
+    },
+    {
+        "id": "5db7f7c.a7b2288",
+        "type": "function",
+        "z": "b6ec8540.7f0b18",
+        "name": "Function",
+        "func": "modo = msg.payload\nif(modo === true){\n    msg.payload = \"El modo actual es:   AUTO\"\n}\nelse{\n    msg.payload = \"El modo actual es:   MANUAL\"\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 400,
+        "y": 200,
+        "wires": [
+            [
+                "bbaed2eb.1f7a8"
+            ]
+        ]
+    },
+    {
+        "id": "fb997bbc.0e2918",
+        "type": "function",
+        "z": "b6ec8540.7f0b18",
+        "name": "Function",
+        "func": "estado = msg.payload\nif(estado === true){\n    msg.payload = \"El estado del LED es:    ENCENDIDO\"\n}\nelse{\n    msg.payload = \"El estado del LED es:    APAGADO\"\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 420,
+        "y": 240,
+        "wires": [
+            [
+                "bbaed2eb.1f7a8"
+            ]
+        ]
+    },
+    {
+        "id": "b999dfca.f36c3",
+        "type": "ui_chart",
+        "z": "b6ec8540.7f0b18",
+        "name": "",
+        "group": "59b687d2.db0258",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Luminosidad",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "30",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#00c341",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "x": 650,
+        "y": 520,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "577cac39.b8464c",
+        "type": "mqtt in",
+        "z": "b6ec8540.7f0b18",
+        "name": "",
+        "topic": "/sensores/luminosidad",
+        "qos": "0",
+        "broker": "7e4248d7.529a5",
+        "x": 160,
+        "y": 520,
+        "wires": [
+            [
+                "b999dfca.f36c3",
+                "c90a952.be7ac68"
+            ]
+        ]
+    },
+    {
+        "id": "63e5a813.51ee18",
+        "type": "ui_chart",
+        "z": "b6ec8540.7f0b18",
+        "name": "",
+        "group": "59b687d2.db0258",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Temperatura",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "30",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#00c341",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "x": 650,
+        "y": 660,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "6da93639.e3f7c",
+        "type": "mqtt in",
+        "z": "b6ec8540.7f0b18",
+        "name": "",
+        "topic": "/sensores/temperatura",
+        "qos": "0",
+        "broker": "7e4248d7.529a5",
+        "x": 160,
+        "y": 660,
+        "wires": [
+            [
+                "63e5a813.51ee18",
+                "6412bc78.afc1ac"
+            ]
+        ]
+    },
+    {
+        "id": "c90a952.be7ac68",
+        "type": "function",
+        "z": "b6ec8540.7f0b18",
+        "name": "Function",
+        "func": "luminosidad = msg.payload;\nmsg.payload = \"Nuevo valor de luminosidad recibido:  \" + luminosidad;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 380,
+        "y": 580,
+        "wires": [
+            [
+                "c65573fd.d58ff"
+            ]
+        ]
+    },
+    {
+        "id": "c65573fd.d58ff",
+        "type": "debug",
+        "z": "b6ec8540.7f0b18",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 550,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "6412bc78.afc1ac",
+        "type": "function",
+        "z": "b6ec8540.7f0b18",
+        "name": "Function",
+        "func": "temperatura = msg.payload;\nmsg.payload = \"Nuevo valor de temperatura recibido:  \" + temperatura;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 390,
+        "y": 720,
+        "wires": [
+            [
+                "285bd95a.e5b836"
+            ]
+        ]
+    },
+    {
+        "id": "285bd95a.e5b836",
+        "type": "debug",
+        "z": "b6ec8540.7f0b18",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 580,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "bb638e40.af2bf",
+        "type": "ui_colour_picker",
+        "z": "b6ec8540.7f0b18",
+        "name": "",
+        "label": "Color LED:",
+        "group": "9380d42c.3c5f1",
+        "format": "hex",
+        "outformat": "string",
+        "showSwatch": false,
+        "showPicker": true,
+        "showValue": true,
+        "showHue": false,
+        "showAlpha": false,
+        "showLightness": true,
+        "dynOutput": "false",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "topic": "",
+        "x": 190,
+        "y": 380,
+        "wires": [
+            [
+                "d3ab3347.a55518",
+                "12de67e7.766a68"
+            ]
+        ]
+    },
+    {
+        "id": "d178eaf.61eb998",
+        "type": "function",
+        "z": "b6ec8540.7f0b18",
+        "name": "Enabled Config",
+        "func": "estado = msg.payload;\n\nif(estado === true){\n    msg.enabled = false;\n}\nelse{\n    msg.enabled = true;\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 180,
+        "y": 220,
+        "wires": [
+            [
+                "bb638e40.af2bf",
+                "9400cba2.39dfb"
+            ]
+        ]
+    },
+    {
+        "id": "9380d42c.3c5f1",
+        "type": "ui_group",
+        "z": "",
+        "name": "Configuración LED",
+        "tab": "961e3fec.c5fd5",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "7e4248d7.529a5",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": ""
+    },
+    {
+        "id": "59b687d2.db0258",
+        "type": "ui_group",
+        "z": "",
+        "name": "Estadísticas ",
+        "tab": "961e3fec.c5fd5",
+        "order": 2,
+        "disp": true,
+        "width": "8",
+        "collapse": false
+    },
+    {
+        "id": "961e3fec.c5fd5",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Home",
+        "icon": "dashboard"
+    }
+]
