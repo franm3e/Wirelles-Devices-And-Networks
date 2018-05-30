@@ -1,0 +1,523 @@
+[
+    {
+        "id": "820ca082.ab262",
+        "type": "debug",
+        "z": "deb0d57.1c46528",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 753,
+        "y": 407,
+        "wires": []
+    },
+    {
+        "id": "9bc3390b.b065c",
+        "type": "debug",
+        "z": "deb0d57.1c46528",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 752,
+        "y": 176,
+        "wires": []
+    },
+    {
+        "id": "d9adc012.29726",
+        "type": "function",
+        "z": "deb0d57.1c46528",
+        "name": "Function",
+        "func": "color = msg.payload\nmsg.payload = \"El color seleccionado es:    \" + color\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 335,
+        "y": 407,
+        "wires": [
+            [
+                "820ca082.ab262"
+            ]
+        ]
+    },
+    {
+        "id": "ba1a8e9f.4dafd",
+        "type": "function",
+        "z": "deb0d57.1c46528",
+        "name": "Function",
+        "func": "modo = msg.payload\nif(modo === true){\n    msg.payload = \"El modo actual es:   AUTO\"\n}\nelse{\n    msg.payload = \"El modo actual es:   MANUAL\"\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 412,
+        "y": 47,
+        "wires": [
+            [
+                "9bc3390b.b065c"
+            ]
+        ]
+    },
+    {
+        "id": "da30a3da.991fa",
+        "type": "function",
+        "z": "deb0d57.1c46528",
+        "name": "Function",
+        "func": "estado = msg.payload\nif(estado === true){\n    msg.payload = \"El estado del LED es:    ENCENDIDO\"\n}\nelse{\n    msg.payload = \"El estado del LED es:    APAGADO\"\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 424,
+        "y": 197,
+        "wires": [
+            [
+                "9bc3390b.b065c"
+            ]
+        ]
+    },
+    {
+        "id": "cfe57840.4109b8",
+        "type": "function",
+        "z": "deb0d57.1c46528",
+        "name": "Function",
+        "func": "luminosidad = msg.payload;\nmsg.payload = \"Nuevo valor de luminosidad recibido:  \" + luminosidad;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 395,
+        "y": 547,
+        "wires": [
+            [
+                "e672951e.28a8d"
+            ]
+        ]
+    },
+    {
+        "id": "e672951e.28a8d",
+        "type": "debug",
+        "z": "deb0d57.1c46528",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 565,
+        "y": 547,
+        "wires": []
+    },
+    {
+        "id": "b6b9cf32.6bc3f8",
+        "type": "function",
+        "z": "deb0d57.1c46528",
+        "name": "Function",
+        "func": "temperatura = msg.payload;\nmsg.payload = \"Nuevo valor de temperatura recibido:  \" + temperatura;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 405,
+        "y": 687,
+        "wires": [
+            [
+                "61ace847.ca96c"
+            ]
+        ]
+    },
+    {
+        "id": "61ace847.ca96c",
+        "type": "debug",
+        "z": "deb0d57.1c46528",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 595,
+        "y": 687,
+        "wires": []
+    },
+    {
+        "id": "d097221b.ce9b08",
+        "type": "function",
+        "z": "deb0d57.1c46528",
+        "name": "Enabled Config",
+        "func": "estado = msg.payload;\n\nif(estado === true){\n    msg.enabled = false;\n}\nelse{\n    msg.enabled = true;\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 180,
+        "y": 160,
+        "wires": [
+            [
+                "e8ec405d.211558",
+                "53b3de1.fcc23a"
+            ]
+        ]
+    },
+    {
+        "id": "2c9e7e05.b15282",
+        "type": "ibmiot in",
+        "z": "deb0d57.1c46528",
+        "authentication": "boundService",
+        "apiKey": "fad66bdb.89bbb8",
+        "inputType": "evt",
+        "logicalInterface": "",
+        "ruleId": "",
+        "deviceId": "device_py",
+        "applicationId": "",
+        "deviceType": "Pycom",
+        "eventType": "temperatura",
+        "commandType": "",
+        "format": "json",
+        "name": "/sensores/temperatura",
+        "service": "registered",
+        "allDevices": true,
+        "allApplications": "",
+        "allDeviceTypes": true,
+        "allLogicalInterfaces": "",
+        "allEvents": false,
+        "allCommands": "",
+        "allFormats": true,
+        "qos": 0,
+        "x": 172.5,
+        "y": 627,
+        "wires": [
+            [
+                "b6b9cf32.6bc3f8",
+                "6b95a17e.62d698"
+            ]
+        ]
+    },
+    {
+        "id": "4cfd85a1.77a284",
+        "type": "ibmiot in",
+        "z": "deb0d57.1c46528",
+        "authentication": "boundService",
+        "apiKey": "fad66bdb.89bbb8",
+        "inputType": "evt",
+        "logicalInterface": "",
+        "ruleId": "",
+        "deviceId": "device_py",
+        "applicationId": "",
+        "deviceType": "Pycom",
+        "eventType": "luminosidad",
+        "commandType": "",
+        "format": "json",
+        "name": "/sensores/luminosidad",
+        "service": "registered",
+        "allDevices": true,
+        "allApplications": "",
+        "allDeviceTypes": true,
+        "allLogicalInterfaces": "",
+        "allEvents": false,
+        "allCommands": "",
+        "allFormats": true,
+        "qos": 0,
+        "x": 173.5,
+        "y": 475,
+        "wires": [
+            [
+                "cfe57840.4109b8",
+                "b1469b02.966658"
+            ]
+        ]
+    },
+    {
+        "id": "258b25cd.3f426a",
+        "type": "ibmiot out",
+        "z": "deb0d57.1c46528",
+        "authentication": "boundService",
+        "apiKey": "fad66bdb.89bbb8",
+        "outputType": "cmd",
+        "deviceId": "device_py",
+        "deviceType": "pycom",
+        "eventCommandType": "topic",
+        "format": "json",
+        "data": "msg.payload",
+        "qos": 0,
+        "name": "/topic",
+        "service": "registered",
+        "x": 811.5,
+        "y": 262,
+        "wires": []
+    },
+    {
+        "id": "cac60e30.a0027",
+        "type": "function",
+        "z": "deb0d57.1c46528",
+        "name": "estado/",
+        "func": "context.global.estado = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 391.5,
+        "y": 132,
+        "wires": [
+            [
+                "d76c4bfb.fe9ff"
+            ]
+        ]
+    },
+    {
+        "id": "d01226d0.8037f8",
+        "type": "function",
+        "z": "deb0d57.1c46528",
+        "name": "led/",
+        "func": "context.global.led = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 421.5,
+        "y": 274,
+        "wires": [
+            [
+                "d76c4bfb.fe9ff"
+            ]
+        ]
+    },
+    {
+        "id": "f341333.c4e055",
+        "type": "function",
+        "z": "deb0d57.1c46528",
+        "name": "/color",
+        "func": "context.global.color = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 384.5,
+        "y": 356,
+        "wires": [
+            [
+                "d76c4bfb.fe9ff"
+            ]
+        ]
+    },
+    {
+        "id": "d76c4bfb.fe9ff",
+        "type": "function",
+        "z": "deb0d57.1c46528",
+        "name": "json_producer",
+        "func": "msg.payload = JSON.stringify(context.global);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 626.5,
+        "y": 262,
+        "wires": [
+            [
+                "258b25cd.3f426a"
+            ]
+        ]
+    },
+    {
+        "id": "b1469b02.966658",
+        "type": "ui_chart",
+        "z": "deb0d57.1c46528",
+        "name": "",
+        "group": "a4abd489.01dec",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Luminosidad",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "30",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#20b41f",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "x": 689,
+        "y": 474,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "6b95a17e.62d698",
+        "type": "ui_chart",
+        "z": "deb0d57.1c46528",
+        "name": "",
+        "group": "a4abd489.01dec",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "Temperatura",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "30",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1fb422",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "x": 700,
+        "y": 624,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "fb3266a4.1aaa88",
+        "type": "ui_switch",
+        "z": "deb0d57.1c46528",
+        "name": "",
+        "label": "ESTADO (MANUAL/AUTO):",
+        "group": "53bec610.975258",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 170,
+        "y": 60,
+        "wires": [
+            [
+                "cac60e30.a0027",
+                "ba1a8e9f.4dafd",
+                "d097221b.ce9b08"
+            ]
+        ]
+    },
+    {
+        "id": "e8ec405d.211558",
+        "type": "ui_switch",
+        "z": "deb0d57.1c46528",
+        "name": "",
+        "label": "LED (OFF/ON):",
+        "group": "53bec610.975258",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 120,
+        "y": 260,
+        "wires": [
+            [
+                "d01226d0.8037f8",
+                "da30a3da.991fa"
+            ]
+        ]
+    },
+    {
+        "id": "53b3de1.fcc23a",
+        "type": "ui_colour_picker",
+        "z": "deb0d57.1c46528",
+        "name": "",
+        "label": "COLOR LED:",
+        "group": "53bec610.975258",
+        "format": "hex",
+        "outformat": "string",
+        "showSwatch": false,
+        "showPicker": true,
+        "showValue": true,
+        "showHue": true,
+        "showAlpha": false,
+        "showLightness": true,
+        "dynOutput": "false",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "",
+        "x": 110,
+        "y": 340,
+        "wires": [
+            [
+                "f341333.c4e055",
+                "d9adc012.29726"
+            ]
+        ]
+    },
+    {
+        "id": "fad66bdb.89bbb8",
+        "type": "ibmiot",
+        "z": "",
+        "name": "ServerIOT",
+        "keepalive": "60",
+        "serverName": "w6w2rz.messaging.internetofthings.ibmcloud.com",
+        "cleansession": true,
+        "appId": "",
+        "shared": false
+    },
+    {
+        "id": "a4abd489.01dec",
+        "type": "ui_group",
+        "z": "",
+        "name": "Gráficas",
+        "tab": "9aaeaf7e.ca514",
+        "order": 2,
+        "disp": true,
+        "width": "10",
+        "collapse": false
+    },
+    {
+        "id": "53bec610.975258",
+        "type": "ui_group",
+        "z": "",
+        "name": "Configuración",
+        "tab": "9aaeaf7e.ca514",
+        "order": 1,
+        "disp": true,
+        "width": "7",
+        "collapse": false
+    },
+    {
+        "id": "9aaeaf7e.ca514",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Home",
+        "icon": "dashboard"
+    }
+]
